@@ -1,4 +1,7 @@
 import http from 'http';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Hardcoded credentials
 const validCredentials = {
@@ -40,7 +43,8 @@ const server = http.createServer((req, res) => {
     }
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT;
+console.log(PORT)
 server.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}/`);
 });
