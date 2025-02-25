@@ -1,0 +1,20 @@
+Séance 3 : Exercice
+● Utiliser la libraire jsonwebtoken
+● Servir tous les fichiers en utilisant la
+librairie Express et Express Static
+● Créer une page HTML avec un formulaire
+contenant un email et un mot de passe
+● Utiliser une requête asynchrone avec l’API
+Web Fetch afin d’envoyer une demande
+de connexion
+● Retourner un JWT et le stocker en utilisant
+l’API Web Storage
+● Stocker l’adresse email dans le JWT
+● Créer une page HTML permettant
+d’afficher l’adresse email d’un utilisateur
+connecté
+● Envoyer une requête avec l’API Web
+Fetch afin de récupérer les informations
+de l’utilisateur
+● Afficher l’adresse email de l’utilisateur
+dans la page
