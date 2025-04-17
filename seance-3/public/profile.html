@@ -42,12 +42,16 @@
             return;
         }
 
+        console.log(token)
+
         try {
             const response = await fetch('/api/user', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
+
+            console.log(response.headers)
 
             if (!response.ok) {
                 throw new Error('Invalid token');
@@ -56,6 +60,8 @@
             const data = await response.json();
             document.getElementById('userEmail').textContent = data.email;
         } catch (err) {
+            console.log(err)
+            return;
             localStorage.removeItem('token');
             window.location.href = '/index.html';
         }

@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "devDependencies": {
+    "@types/node": "22.7.4"
+  }
+}

@@ -8,35 +8,47 @@ const app = express();
 app.use(express.json());
 app.use(express.static('public'));
 
-const validUser = {
-    email: "admin@mail.fr",
-    password: "password1234"
-};
+const validUsers = [
+    {
+        email: "admin@mail.fr",
+        password: "password1234"
+    },
+    {
+        email: "toto@mail.fr",
+        password: "toto1234"
+    }
+]
 
 app.post('/api/login', (req, res) => {
     const { email, password } = req.body;
 
-    if (email === validUser.email && password === validUser.password) {
+    const user = validUsers.find(user => user.email === email && user.password === password);
+
+    if (user) {
         const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.json({ token });
     } else {
-        res.status(401).json({ error: 'Invalid credentials' });
+        res.status(401).json({ error: 'Identifiants invalides' });
     }
 });
 
 app.get('/api/user', (req, res) => {
     const authHeader = req.headers.authorization;
+    console.log(authHeader);
 
     if (!authHeader) {
         return res.status(401).json({ error: 'No token provided' });
     }
 
     const token = authHeader.split(' ')[1];
-
+    console.log({token})
     try {
+        console.log("try decoded")
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        console.log({decoded})
         res.json({ email: decoded.email });
     } catch (err) {
+        console.log(err)
         res.status(401).json({ error: 'Invalid token' });
     }
 });
