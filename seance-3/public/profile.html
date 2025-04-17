@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: black;
+            color: white;
+        }
+        .email {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        button {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #da190b;
+        }
+    </style>
+</head>
+<body>
+<h2>Profile</h2>
+<div class="email">Email: <span id="userEmail">Loading...</span></div>
+<button onclick="logout()">Logout</button>
+
+<script>
+    async function fetchUserData() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = '/index.html';
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/user', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Invalid token');
+            }
+
+            const data = await response.json();
+            document.getElementById('userEmail').textContent = data.email;
+        } catch (err) {
+            localStorage.removeItem('token');
+            window.location.href = '/index.html';
+        }
+    }
+
+    function logout() {
+        localStorage.removeItem('token');
+        window.location.href = '/index.html';
+    }
+
+    fetchUserData();
+</script>
+</body>
+</html>
