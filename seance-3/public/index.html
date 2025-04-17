@@ -57,6 +57,13 @@
 <p id="error" class="error"></p>
 
 <script>
+    const token = localStorage.getItem('token');
+    // apply token value verification
+    if (token) {
+        window.location.href = '/profile.html';
+    }
+
+
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
