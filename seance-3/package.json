@@ -1,0 +1,10 @@
+{
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node server.js --env"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  }
+}
