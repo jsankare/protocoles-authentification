@@ -2,9 +2,12 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "node server.js --env"
+    "start": "nodemon server.js"
   },
   "dependencies": {
-    "jsonwebtoken": "^9.0.2"
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.9"
   }
 }
