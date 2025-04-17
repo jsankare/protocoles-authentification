@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>JSON Web Token</title>
+</head>
+
+<body>
+  <form id="verify">
+    <input type="text" placeholder="Jeton JWT" id="token">
+    <button type="submit">Verify</button>
+  </form>
+  <p id="output"></p>
+  <p id="error"></p>
+  <script>
+    const outputElement = document.getElementById("output");
+    const errorElement = document.getElementById("error");
+    const verifyElement = document.getElementById("verify");
+    const tokenElement = document.getElementById("token");
+
+    verifyElement.addEventListener("submit", event => {
+      event.preventDefault();
+
+      outputElement.innerText = "";
+      errorElement.innerText = "";
+
+      fetch("http://localhost:8000/jsonwebtoken/verify", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          token: tokenElement.value
+        })
+      }).then(response => {
+        if (!response.ok) {
+          if (response.status === 401) {
+            throw new Error("Jeton invalide.");
+          }
+
+          throw new Error("Mauvaise réponse du serveur.");
+        }
+
+        outputElement.innerText = "Jeton valide";
+      }).catch(error => {
+        errorElement.innerText = String(error)
+      });
+    });
+  </script>
+</body>
+
+</html>

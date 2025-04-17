@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JSON Web Token</title>
+  </head>
+  <body>
+    <p id="output"></p>
+    <p id="error"></p>
+    <a href="/verify.html">Verify?</a>
+    <script>
+      const outputElement = document.getElementById("output");
+      const errorElement = document.getElementById("error");
+
+      fetch("http://localhost:8000/jsonwebtoken", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: "johndoe",
+          password: "password"
+        })
+      }).then(response => {
+        if (!response.ok) {
+          if (response.status === 400) {
+            throw new Error("Mauvaise requête.");
+          }
+
+          if (response.status === 401) {
+            throw new Error("Identifiants invalides.");
+          }
+
+          throw new Error("Mauvaise réponse du serveur.");
+        }
+
+        return response.json();
+      }).then(json => {
+        if (typeof json !== "object") {
+          throw new Error("La réponse n'est pas un objet");
+        }
+
+        if (typeof json["token"] !== "string") {
+          throw new Error("La réponse ne contient pas une propriété token de type string");
+        }
+
+        outputElement.innerText = json.token;
+      }).catch(error => {
+        errorElement.innerText = String(error)
+      });
+    </script>
+  </body>
+</html>
